@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Proyecto E-commerce </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="wrapper">
+        <header>
+            <div class="top-nav">
+                <div class="brand">TechStore <strong>v1.0</strong></div>
+                <ul id="menu-principal">
+                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('inicio')">Home</a></li>
+                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('tienda')">Tienda</a></li>
+                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('nosotros')">Info</a></li>
+                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('contacto')">Contacto</a></li>
+                </ul>
+                <div class="cart-box" onclick="verCarrito()">
+                    🛒 Carrito (<span id="num-items">0</span>)
+                </div>
+            </div>
+        </header>
+
+        <div id="contenedor-principal">
+            
+            <div id="sec-inicio" class="seccion">
+                <div class="banner">
+                    <h1>Bienvenidos a la tienda</h1>
+                    <p>Catálogo de hardware para la facultad.</p>
+                    <button onclick="cambiarSeccion('tienda')">Ver productos</button>
+                </div>
+            </div>
+
+            <div id="sec-tienda" class="seccion" style="display:none;">
+                <h2 style="margin-bottom:20px;">Catálogo</h2>
+                <div class="grid-productos" id="lista-prods">
+                    </div>
+            </div>
+
+            <div id="sec-nosotros" class="seccion" style="display:none;">
+                <h2>Sobre el Proyecto</h2>
+                <p>Desarrollado para la materia de Front End. 
+                   <br>Alumno: Miguel Cordova - Matrícula: 221202077 </p>
+            </div>
+
+            <div id="sec-contacto" class="seccion" style="display:none;">
+                <h2>Contacto</h2>
+                <form class="form-contacto">
+                    <input type="text" id="c_nombre" placeholder="Nombre completo">
+                    <input type="email" id="c_correo" placeholder="Email">
+                    <textarea id="c_msg" placeholder="Dudas o sugerencias..."></textarea>
+                    <button type="button" onclick="alert('Mensaje enviado (simulado)')">Enviar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="modalCarrito" class="modal-bg">
+        <div class="modal-body">
+            <h3>Detalle de tu compra</h3>
+            <div id="items-carrito"></div>
+            <div class="resumen">
+                <strong>Total a pagar: $<span id="total-monto">0</span></strong>
+            </div>
+            <div class="acciones">
+                <button onclick="cerrarModal()">Cerrar</button>
+                <button id="btn-comprar" onclick="alert('Procesando pago...')">Finalizar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
