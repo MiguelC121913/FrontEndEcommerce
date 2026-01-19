@@ -2,72 +2,74 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Proyecto E-commerce </title>
+    <title>TechStore - Proyecto Final Web</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="wrapper">
-        <header>
-            <div class="top-nav">
-                <div class="brand">TechStore <strong>v1.0</strong></div>
-                <ul id="menu-principal">
-                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('inicio')">Home</a></li>
-                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('tienda')">Tienda</a></li>
-                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('nosotros')">Info</a></li>
-                    <li><a href="javascript:void(0)" onclick="cambiarSeccion('contacto')">Contacto</a></li>
-                </ul>
-                <div class="cart-box" onclick="verCarrito()">
-                    🛒 Carrito (<span id="num-items">0</span>)
+    <header>
+        <nav class="navbar">
+            <div class="logo">TechStore <strong>v1.0</strong></div>
+            <ul class="menu">
+                <li><a href="#" onclick="mostrarSeccion('inicio')">Inicio</a></li>
+                <li><a href="#" onclick="mostrarSeccion('tienda')">Tienda</a></li>
+                <li><a href="#" onclick="mostrarSeccion('nosotros')">Nosotros</a></li>
+                <li><a href="#" onclick="mostrarSeccion('contacto')">Contacto</a></li>
+            </ul>
+            <div class="carrito-status" onclick="abrirCarrito()">
+                🛒 Carrito: <span id="contador">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main id="contenido-dinamico">
+        
+        <section id="sec-inicio" class="modulo-seccion">
+            <div class="hero-simple">
+                <h1>Tu Tienda de Hardware Favorita</h1>
+                <p>Equipos de alto rendimiento para proyectos de ingeniería y desarrollo.</p>
+                <button type="button" onclick="mostrarSeccion('tienda')">Ver Catálogo</button>
+            </div>
+        </section>
+
+        <section id="sec-tienda" class="modulo-seccion" style="display:none;">
+            <h2 class="titulo-pag">Nuestros Productos</h2>
+            <div id="grid-productos" class="contenedor-grid">
                 </div>
-            </div>
-        </header>
+        </section>
 
-        <div id="contenedor-principal">
-            
-            <div id="sec-inicio" class="seccion">
-                <div class="banner">
-                    <h1>Bienvenidos a la tienda</h1>
-                    <p>Catálogo de hardware para la facultad.</p>
-                    <button onclick="cambiarSeccion('tienda')">Ver productos</button>
-                </div>
-            </div>
+        <section id="sec-nosotros" class="modulo-seccion" style="display:none;">
+            <h2>Sobre el Desarrollador</h2>
+            <p>Este proyecto fue desarrollado para la evaluación de Front-End. Se aplicaron conceptos de manipulación del DOM, eventos y maquetación semántica.</p>
+        </section>
 
-            <div id="sec-tienda" class="seccion" style="display:none;">
-                <h2 style="margin-bottom:20px;">Catálogo</h2>
-                <div class="grid-productos" id="lista-prods">
-                    </div>
-            </div>
+        <section id="sec-contacto" class="modulo-seccion" style="display:none;">
+            <h2>Formulario de Contacto</h2>
+            <form id="form-cont" class="estilo-form">
+                <input type="text" placeholder="Nombre completo" required>
+                <input type="email" placeholder="Correo electrónico" required>
+                <textarea placeholder="Motivo de contacto..." rows="4"></textarea>
+                <button type="button" onclick="alert('Gracias por escribirnos')">Enviar Datos</button>
+            </form>
+        </section>
 
-            <div id="sec-nosotros" class="seccion" style="display:none;">
-                <h2>Sobre el Proyecto</h2>
-                <p>Desarrollado para la materia de Front End. 
-                   <br>Alumno: Miguel Cordova - Matrícula: 221202077 </p>
-            </div>
+    </main>
 
-            <div id="sec-contacto" class="seccion" style="display:none;">
-                <h2>Contacto</h2>
-                <form class="form-contacto">
-                    <input type="text" id="c_nombre" placeholder="Nombre completo">
-                    <input type="email" id="c_correo" placeholder="Email">
-                    <textarea id="c_msg" placeholder="Dudas o sugerencias..."></textarea>
-                    <button type="button" onclick="alert('Mensaje enviado (simulado)')">Enviar</button>
-                </form>
-            </div>
+    <footer class="pie-pagina">
+        <p>&copy; 2026 - Carrera de Ingeniería en Sistemas de Información</p>
+        <p>Desarrollado con HTML, CSS y JS puro.</p>
+    </footer>
 
-        </div>
-    </div>
-
-    <div id="modalCarrito" class="modal-bg">
-        <div class="modal-body">
-            <h3>Detalle de tu compra</h3>
-            <div id="items-carrito"></div>
-            <div class="resumen">
-                <strong>Total a pagar: $<span id="total-monto">0</span></strong>
+    <div id="modal-car" class="overlay">
+        <div class="ventana-modal">
+            <h3>Detalle de Compra</h3>
+            <div id="lista-car"></div>
+            <div class="total-area">
+                <strong>Total Estimado: $<span id="monto-total">0</span></strong>
             </div>
-            <div class="acciones">
-                <button onclick="cerrarModal()">Cerrar</button>
-                <button id="btn-comprar" onclick="alert('Procesando pago...')">Finalizar</button>
+            <div class="btn-group">
+                <button onclick="cerrarCarrito()">Regresar</button>
+                <button class="btn-pago" onclick="alert('Enviando a pasarela de pago...')">Pagar</button>
             </div>
         </div>
     </div>

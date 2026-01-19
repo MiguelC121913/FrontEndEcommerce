@@ -1,91 +1,82 @@
-// Arreglo de datos del catalogo
-var stock = [
-    { id: 101, titulo: "Laptop Gamer X", precio: 12500, img: "img/laptop.jpg" },
-    { id: 102, titulo: "Mouse Optico", precio: 350, img: "img/mouse.jpg" },
-    { id: 103, titulo: "Teclado Mecanico", precio: 850, img: "img/teclado.jpg" },
-    { id: 104, titulo: "Audifonos Pro", precio: 1200, img: "img/audifonos.jpg" }
+// Base de datos local
+var inventario = [
+    { id: 1, item: "Laptop Profesional", precio: 1500, foto: "img/laptop.jpg" },
+    { id: 2, item: "Mouse Gamer RGB", precio: 45, foto: "img/mouse.jpg" },
+    { id: 3, item: "Teclado Mecánico", precio: 85, foto: "img/teclado.jpg" },
+    { id: 4, item: "Audífonos Studio", precio: 120, foto: "img/audifonos.jpg" }
 ];
 
-// Carrito de compras temporal
-var carrito = [];
+var miCarrito = [];
 
-// Funcion para cambiar entre las "pestañas"
-function cambiarSeccion(nombreSec) {
-    console.log("Cambiando a: " + nombreSec);
+// Navegación de pestañas
+function mostrarSeccion(idDeseado) {
+    var bloques = document.getElementsByClassName('modulo-seccion');
     
-    // Ocultamos todas las secciones
-    var secciones = document.getElementsByClassName('seccion');
-    for(var i = 0; i < secciones.length; i++){
-        secciones[i].style.display = 'none';
+    for (var i = 0; i < bloques.length; i++) {
+        bloques[i].style.display = 'none';
     }
     
-    // Mostramos la que queremos
-    document.getElementById('sec-' + nombreSec).style.display = 'block';
+    document.getElementById('sec-' + idDeseado).style.display = 'block';
 }
 
-// Cargar los productos al inicio
-function renderTienda() {
-    var divLista = document.getElementById('lista-prods');
-    divLista.innerHTML = ""; // Limpiar
+// Pintar productos con ALT descriptivo
+function cargarProductos() {
+    var contenedor = document.getElementById('grid-productos');
+    contenedor.innerHTML = ""; // Reset
 
-    for(var i=0; i < stock.length; i++) {
-        var p = stock[i];
-        divLista.innerHTML += `
-            <div class="item-card">
-                <img src="${p.img}" alt="prod">
-                <h4>${p.titulo}</h4>
-                <p>Precio: $${p.precio}</p>
-                <button class="btn-add-car" onclick="agregarAlCarro(${p.id})">Agregar</button>
+    for (var i = 0; i < inventario.length; i++) {
+        var p = inventario[i];
+        contenedor.innerHTML += `
+            <div class="tarjeta-prod">
+                <img src="${p.foto}" alt="Imagen de ${p.item} disponible en TechStore">
+                <h3>${p.item}</h3>
+                <p>Precio: <strong>$${p.precio}</strong></p>
+                <button class="btn-add" onclick="meterAlCarro(${p.id})">Comprar</button>
             </div>
         `;
     }
 }
 
-function agregarAlCarro(idProd) {
-    // Buscar producto por ID
-    for(var j=0; j < stock.length; j++) {
-        if(stock[j].id == idProd) {
-            carrito.push(stock[j]);
+function meterAlCarro(idBuscado) {
+    for (var j = 0; j < inventario.length; j++) {
+        if (inventario[j].id === idBuscado) {
+            miCarrito.push(inventario[j]);
             break;
         }
     }
-    
-    // Actualizar numero en el menu
-    document.getElementById('num-items').innerText = carrito.length;
-    console.log("Producto agregado...");
+    document.getElementById('contador').innerText = miCarrito.length;
 }
 
-function verCarrito() {
-    var modal = document.getElementById('modalCarrito');
-    var listaHtml = document.getElementById('items-carrito');
-    var totalTxt = document.getElementById('total-monto');
+function abrirCarrito() {
+    var modal = document.getElementById('modal-car');
+    var listaDiv = document.getElementById('lista-car');
+    var txtTotal = document.getElementById('monto-total');
     
-    listaHtml.innerHTML = "";
-    var cuenta = 0;
+    listaDiv.innerHTML = "";
+    var suma = 0;
 
-    if(carrito.length == 0) {
-        listaHtml.innerHTML = "<p>El carrito esta vacio.</p>";
+    if (miCarrito.length === 0) {
+        listaDiv.innerHTML = "<p>Aún no has elegido productos.</p>";
     } else {
-        for(var k=0; k < carrito.length; k++) {
-            cuenta += carrito[k].precio;
-            listaHtml.innerHTML += `
-                <div style="border-bottom:1px solid #ccc; padding:5px 0;">
-                    ${carrito[k].titulo} - <b>$${carrito[k].precio}</b>
+        for (var k = 0; k < miCarrito.length; k++) {
+            suma += miCarrito[k].precio;
+            listaDiv.innerHTML += `
+                <div style="border-bottom:1px dashed #ccc; padding: 10px 0;">
+                    ${miCarrito[k].item} - $${miCarrito[k].precio}
                 </div>
             `;
         }
     }
     
-    totalTxt.innerText = cuenta;
+    txtTotal.innerText = suma;
     modal.style.display = "block";
 }
 
-function cerrarModal() {
-    document.getElementById('modalCarrito').style.display = "none";
+function cerrarCarrito() {
+    document.getElementById('modal-car').style.display = "none";
 }
 
-// Iniciar app
+// Ejecución inicial
 window.onload = function() {
-    renderTienda();
-    console.log("App cargada correctamente.");
+    cargarProductos();
 };
